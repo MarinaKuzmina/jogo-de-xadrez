@@ -2,6 +2,7 @@ package chess;
 
 import boardgame.Board;
 import boardgame.Piece;
+import boardgame.Position;
 
 public abstract class ChessPiece extends Piece {
 
@@ -15,8 +16,13 @@ public abstract class ChessPiece extends Piece {
     public Color getColor() {
         return color;
     }
-    /*
-    A cor de uma peça não pode ser modificada
-     */
+    protected boolean isThereOpponentPiece(Position position){
+        ChessPiece p = (ChessPiece)getBoard().piece(position);
+        /*
+        Para concluir que "p" é uma peça adversária, terei que testar se o "p" é
+        diferente de nulo e diferente da cor da peça onde eu estou
+         */
+        return p != null && p.getColor() != color;
+    }
 
 }

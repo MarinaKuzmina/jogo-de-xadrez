@@ -40,6 +40,7 @@ public class ChessMatch {
         se ela não exixtir, o programa vai lançar uma excessão
          */
         validateSourcePosition(source);
+        validateTargetPosition(source, target);
         Piece capturedPiece = makeMove(source, target);
         return (ChessPiece) capturedPiece;
     }
@@ -59,6 +60,12 @@ public class ChessMatch {
         }
         if(!board.piece(position).isThereAnyPossibleMove()){
             throw new ChessException("There is no possible noves for the chosen piece ");
+        }
+    }
+    private void validateTargetPosition(Position source, Position target){
+        //se na posição de origigem não há um movimento possivel, não posso mover pra la
+        if(!board.piece(source).possibleMove(target)){
+            throw new ChessException("A peça escolhida não pode se mover para posição de destino");
         }
     }
     /*
