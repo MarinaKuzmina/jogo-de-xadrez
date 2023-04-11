@@ -12,4 +12,13 @@ public class King extends ChessPiece {
     public String toString() {
         return "K";
     }
+
+    @Override
+    public boolean[][] possibleMoves() {
+        /*
+        a matriz temporario criada vai ter a mesma qtd de linhas e colunas que o tabuleiro
+         */
+        boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];
+        return mat;
+    }
 }
