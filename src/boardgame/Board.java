@@ -40,12 +40,37 @@ public class Board {
      */
     public void placePiece(Piece piece, Position position){
         //se já existe a peça nesta posição, eu não posso colocar outra
-        if(ThereIsAPiece(position)){
+        if(thereIsAPiece(position)){
             throw new BoardException("There is a piece on position " + position);
         }
         //vai pro matriz de peças, percorre linhas e colunas e posiciona uma peça
         pieces[position.getRow()][position.getColumn()] = piece;
         piece.position = position; //posição não é mais nula
+    }
+    public Piece removePiece(Position position){
+        //se essa posição não existe, eu vou lançar uma excessão
+        if(!positionExists(position)){
+            throw new BoardException("Position is not on the board");
+        }
+        /*
+        Se a peça do tabuleiro nessa posição é igual a nulo,
+        isso significa que não tem nenhuma peça nessa posição e vou retornar o valor null
+         */
+        if(piece(position) == null){
+            return null;
+        }
+        /*
+        Caso contrário, vou remover a peça do tabuleiro. auxis vai receber a peça que estiver
+        no tabuleiro nessa posiçãonessa posiçâo
+         */
+        Piece aux = piece(position);
+        aux.position = null; //posição aux vai ser null, ou seja, essa peça foi retirada do tabuleiro
+        /*
+        Vou acessar a patriz de peças e vou falar que essa matriz de peças na linha "position.getTow
+        e na coluna position.getColumn vai receber nulo
+         */
+        pieces[position.getRow()][position.getColumn()] = null;
+        return aux; //contém a peça que foi retirada
     }
     public boolean positionExists(int row, int column) {
         /*
@@ -62,7 +87,7 @@ public class Board {
     /*
     testar se existe peça nessa posição
      */
-    public boolean ThereIsAPiece(Position position){
+    public boolean thereIsAPiece(Position position){
         if (!positionExists(position)) {
             throw new BoardException("Position is not on the board");
         }

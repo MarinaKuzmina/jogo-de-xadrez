@@ -1,7 +1,11 @@
 package application;
 
 import chess.ChessPiece;
+import chess.ChessPosition;
 import chess.Color;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class UI {
 
@@ -26,12 +30,23 @@ public class UI {
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
+    public static ChessPosition readChessPosition(Scanner scan) {//ler posição do chadrez
+        try {
+            String s = scan.nextLine();
+            char column = s.charAt(0); //posição da coluna que comeca com zero
+            int row = Integer.parseInt(s.substring(1));//recortar String apartir da posição 1
+            return new ChessPosition(column, row);
+        } catch (RuntimeException e) {
+            throw new InputMismatchException("Invalid position (a1 até h8)");
+        }
+    }
+
 
     //imprimir o tabuleiro inteiro
-    public static void printBoard(ChessPiece[][] pieces){
-        for(int i=0; i<pieces.length; i++){
-            System.out.print((8-i) + " ");
-            for(int j=0; j<pieces.length; j++){
+    public static void printBoard(ChessPiece[][] pieces) {
+        for (int i = 0; i < pieces.length; i++) {
+            System.out.print((8 - i) + " ");
+            for (int j = 0; j < pieces.length; j++) {
                 printPiece(pieces[i][j]);
             }
             //dar uma quebra de linha
@@ -52,18 +67,18 @@ public class UI {
         System.out.print(" ");
     }
     */
-    private static void printPiece (ChessPiece piece) {
-
+    private static void printPiece(ChessPiece piece) {
         if (piece == null) { //se não tiver peça
             System.out.print("-");
-        } else {
-            if (piece.getColor() == Color.WHITE){
-                System.out.println(ANSI_WHITE + piece + ANSI_RESET);
-        }else{
-            System.out.println(ANSI_YELLOW + piece + ANSI_RESET);
+        }
+        else {
+            if (piece.getColor() == Color.WHITE) {
+                System.out.print(ANSI_WHITE + piece + ANSI_RESET);
             }
-    }
+            else {
+                System.out.print(ANSI_YELLOW + piece + ANSI_RESET);
+            }
+        }
         System.out.print(" ");
     }
-
 }
