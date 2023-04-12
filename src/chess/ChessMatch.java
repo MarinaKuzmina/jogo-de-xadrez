@@ -7,11 +7,21 @@ import chess.pieces.King;
 import chess.pieces.Rook;
 
 public class ChessMatch {
+    private int turn;
+    private Color currentPlayer;
     private Board board;//partida de xadrez tem o tabuleiro
 
     public ChessMatch() {
         board = new Board(8, 8); //essa classe vai recever o tabuleiro 8x8
+        turn = 1;
+        currentPlayer = Color.WHITE;
         inicialSetup();
+    }
+    public int getTurn(){
+        return turn;
+    }
+    public Color getCurrentPlayer(){
+        return currentPlayer;
     }
 
     /*
@@ -56,6 +66,7 @@ public class ChessMatch {
         validateSourcePosition(source);
         validateTargetPosition(source, target);
         Piece capturedPiece = makeMove(source, target);
+        nextTurn();
         return (ChessPiece) capturedPiece;
     }
     private Piece makeMove(Position source, Position target){
@@ -72,6 +83,9 @@ public class ChessMatch {
         if(!board.thereIsAPiece(position)){
             throw new ChessException("There is no piece on source position ");
         }
+        if(currentPlayer != ((ChessPiece)board.piece(position)).getColor()){
+            throw new ChessException("The chosen piece is not yours");
+        }
         if(!board.piece(position).isThereAnyPossibleMove()){
             throw new ChessException("There is no possible noves for the chosen piece ");
         }
@@ -82,8 +96,13 @@ public class ChessMatch {
             throw new ChessException("A peça escolhida não pode se mover para posição de destino");
         }
     }
+    private void nextTurn(){
+        turn++;
+        //mudar jogador atual (se agora ele é branco, vai ser preto; caso contrario, branco)
+        currentPlayer = (currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE;
+    }
     /*
-    esse metodo é responsavel por inicial a partidaq de xadrez,
+    esse metodo é responsavel por inicial a partida de xadrez,
     colocando peças no tabuleiro
      */
     private void inicialSetup() {

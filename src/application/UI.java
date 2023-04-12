@@ -1,5 +1,6 @@
 package application;
 
+import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.ChessPosition;
 import chess.Color;
@@ -44,6 +45,11 @@ public class UI {
         } catch (RuntimeException e) {
             throw new InputMismatchException("Invalid position (a1 até h8)");
         }
+    }
+    public static void printMatch(ChessMatch chessMatch){
+        printBoard(chessMatch.getPieces());
+        System.out.println("Turn: " + chessMatch.getTurn());
+        System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
     }
 
 
