@@ -17,7 +17,8 @@ public class Program {
         ChessMatch chessMatch = new ChessMatch();
         List<ChessPiece> captured = new ArrayList<>();
 
-        while (true) {//ele vai repetir infinitamente
+        //while (true) {//ele vai repetir infinitamente
+        while (!chessMatch.getCheckMate()) {
             try {
                 UI.clearScreen();
                 //UI.printBoard(chessMatch.getPieces());
@@ -34,7 +35,7 @@ public class Program {
                 ChessPosition target = UI.readChessPosition(scan);
 
                 ChessPiece capturedPiece = chessMatch.performChessMove(source, target);//movendo de origem para o destino
-                if(capturedPiece != null ){
+                if (capturedPiece != null) {
                     captured.add(capturedPiece);
                 }
 
@@ -46,5 +47,7 @@ public class Program {
                 scan.nextLine();
             }
         }
+        UI.clearScreen();
+        UI.printMatch(chessMatch, captured);
     }
 }
